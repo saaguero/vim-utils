@@ -31,7 +31,7 @@ function! SourceVimscript(type)
     @"
 
     let &selection = sel_save
-    let @@ = reg_save
+    let @" = reg_save
 endfunction
 
 nnoremap <silent> gs :set opfunc=SourceVimscript<CR>g@
