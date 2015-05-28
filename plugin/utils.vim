@@ -1,3 +1,4 @@
+" source vimscript operator
 function! SourceVimscript(type)
     let sel_save = &selection
     let &selection = "inclusive"
@@ -23,3 +24,12 @@ endfunction
 nnoremap <silent> gs :set opfunc=SourceVimscript<CR>g@
 vnoremap <silent> gs :<C-U>call SourceVimscript("visual")<CR>
 nnoremap <silent> gss :call SourceVimscript("currentline")<CR>
+
+" split lines on whitespace
+function! SplitOnSpace()
+  execute "normal f\<space>i\r\e"
+  " make it repeatable (requires vim-repeat)
+  silent! call repeat#set("\<Plug>CustomSplitOnSpace")
+endfunction
+nnoremap <silent> <Plug>CustomSplitOnSpace :call SplitOnSpace()<cr>
+nnoremap <silent> <leader>s :call SplitOnSpace()<cr>
