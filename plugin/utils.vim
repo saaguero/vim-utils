@@ -25,11 +25,27 @@ nnoremap <silent> gs :set opfunc=SourceVimscript<CR>g@
 vnoremap <silent> gs :<C-U>call SourceVimscript("visual")<CR>
 nnoremap <silent> gss :call SourceVimscript("currentline")<CR>
 
+
 " split lines on whitespace
+" repeatable (requires vim-repeat)
 function! SplitOnSpace()
   execute "normal f\<space>i\r\e"
-  " make it repeatable (requires vim-repeat)
   silent! call repeat#set("\<Plug>CustomSplitOnSpace")
 endfunction
+
 nnoremap <silent> <Plug>CustomSplitOnSpace :call SplitOnSpace()<cr>
 nnoremap <silent> <leader>s :call SplitOnSpace()<cr>
+
+
+function! GetVisualSelection()
+  let old_reg = @v
+  normal! gv"vy
+  let raw_search = @v
+  let @v = old_reg
+  return substitute(escape(raw_search, '\/.*$^~[]'), "\n", '\\n', "g")
+endfunction
+
+" Easy search/replace (from romainl/dotvim)
+nnoremap <Space><Space> :%s/\<<C-r>=expand('<cword>')<CR>\>/
+vnoremap <Space><Space> :<C-u>%s/<C-r>=GetVisualSelection()<CR>/
+
