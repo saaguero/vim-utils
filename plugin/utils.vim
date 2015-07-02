@@ -49,3 +49,9 @@ endfunction
 nnoremap <Space><Space> :%s/\<<C-r>=expand('<cword>')<CR>\>/
 vnoremap <Space><Space> :<C-u>%s/<C-r>=GetVisualSelection()<CR>/
 
+function! FormatJsonFun()
+  %!python -m json.tool
+  normal! gg=G
+endfunction
+
+command! FormatJson call FormatJsonFun()
