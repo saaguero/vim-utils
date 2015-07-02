@@ -36,7 +36,6 @@ endfunction
 nnoremap <silent> <Plug>CustomSplitOnSpace :call SplitOnSpace()<cr>
 nnoremap <silent> <leader>s :call SplitOnSpace()<cr>
 
-
 function! GetVisualSelection()
   let old_reg = @v
   normal! gv"vy
@@ -48,6 +47,10 @@ endfunction
 " Easy search/replace (from romainl/dotvim)
 nnoremap <Space><Space> :%s/\<<C-r>=expand('<cword>')<CR>\>/
 vnoremap <Space><Space> :<C-u>%s/<C-r>=GetVisualSelection()<CR>/
+
+" Easy multiple cursors
+nnoremap <c-N> :MultipleCursorsFind \<<C-r>=expand('<cword>')<CR>\><cr>
+vnoremap <Space><c-n> :<C-u>MultipleCursorsFind <C-r>=GetVisualSelection()<CR><cr>
 
 function! FormatJsonFun()
   %!python -m json.tool
