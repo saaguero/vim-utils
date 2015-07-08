@@ -14,6 +14,8 @@ function! SourceVimscript(type)
         silent execute "normal! yy"
     endif
 
+    let @" = substitute(@", '\n\s*\\', '', 'g')
+
     " source the content
     @"
 
