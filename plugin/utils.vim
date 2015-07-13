@@ -54,9 +54,14 @@ vnoremap <Space><Space> :<C-u>%s/<C-r>=GetVisualSelection()<CR>/
 nnoremap <c-N> :MultipleCursorsFind \<<C-r>=expand('<cword>')<CR>\><cr>
 vnoremap <Space><c-n> :<C-u>MultipleCursorsFind <C-r>=GetVisualSelection()<CR><cr>
 
-function! FormatJsonFun()
-  %!python -m json.tool
+function! FormatJsonFun(a1, a2)
+  if a:a1 == a:a2
+    .!python -m json.tool
+  else
+    execute a:a1 . "," . a:a2 . "!python -m json.tool"
+  endif
   normal! gg=G
 endfunction
 
-command! FormatJson call FormatJsonFun()
+command! -range FormatJson call FormatJsonFun(<line1>, <line2>)
+
