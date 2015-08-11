@@ -47,12 +47,12 @@ function! GetVisualSelection()
 endfunction
 
 " Easy search/replace (from romainl/dotvim)
-nnoremap <Space><Space> :%s/\<<C-r>=expand('<cword>')<CR>\>/
-vnoremap <Space><Space> :<C-u>%s/<C-r>=GetVisualSelection()<CR>/
+nnoremap <space><space> :%s/\<<C-r>=expand('<cword>')<CR>\>/
+vnoremap <space><space> :<C-u>%s/<C-r>=GetVisualSelection()<CR>/
 
 " Easy multiple cursors
-nnoremap <c-N> :MultipleCursorsFind \<<C-r>=expand('<cword>')<CR>\><cr>
-vnoremap <Space><c-n> :<C-u>MultipleCursorsFind <C-r>=GetVisualSelection()<CR><cr>
+nnoremap <space>n :MultipleCursorsFind \<<C-r>=expand('<cword>')<CR>\><cr>
+vnoremap <space>n :<C-u>MultipleCursorsFind <C-r>=GetVisualSelection()<CR><cr>
 
 function! FormatJsonFun(a1, a2)
   if a:a1 == a:a2
