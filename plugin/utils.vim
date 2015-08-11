@@ -65,3 +65,18 @@ endfunction
 
 command! -range FormatJson call FormatJsonFun(<line1>, <line2>)
 
+function! RunCommand()
+    let s:sel = GetVisualSelection()
+    let s:result = system(s:sel)
+    if !v:shell_error
+        set paste
+        execute "normal gvc" . s:result
+        set nopaste
+    else
+        echom 'Error executing command: ' . s:sel
+    endif
+endfunction
+
+" Run bash command
+nnoremap <leader>! !!bash<cr>
+vnoremap <leader>! :<c-u>call RunCommand()<cr>
