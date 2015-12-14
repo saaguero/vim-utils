@@ -23,10 +23,9 @@ function! SourceVimscript(type)
     let @" = reg_save
 endfunction
 
-nnoremap <silent> gs :set opfunc=SourceVimscript<CR>g@
-vnoremap <silent> gs :<C-U>call SourceVimscript("visual")<CR>
-nnoremap <silent> gss :call SourceVimscript("currentline")<CR>
-
+nnoremap <silent> <leader>s :set opfunc=SourceVimscript<CR>g@
+vnoremap <silent> <leader>s :<C-U>call SourceVimscript("visual")<CR>
+nnoremap <silent> <leader>ss :call SourceVimscript("currentline")<CR>
 
 " split lines on whitespace
 " repeatable (requires vim-repeat)
@@ -36,7 +35,7 @@ function! SplitOnSpace()
 endfunction
 
 nnoremap <silent> <Plug>CustomSplitOnSpace :call SplitOnSpace()<cr>
-nnoremap <silent> <leader>s :call SplitOnSpace()<cr>
+nnoremap <silent> <leader>j :call SplitOnSpace()<cr>
 
 function! GetVisualSelection()
   let old_reg = @v
