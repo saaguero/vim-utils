@@ -90,3 +90,38 @@ endfunction
 
 xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
 xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
+
+function <SID>FindTagFile(tag_file_name)
+    " From our current directory, search up for tagfile
+    let l:tag_file = findfile(a:tag_file_name, '.;/') " must be somewhere above us
+    let l:tag_file = fnamemodify(l:tag_file, ':p')      " get the full path
+    if filereadable(l:tag_file)
+        return l:tag_file
+    else
+        return ''
+    endif
+endfunction
+
+" Automatically include cscope db if available. Taken from idbrii/daveconfig
+" Works either with cscope or gtags-cscope
+if has("cscope")
+    function LocateCscopeFile()
+        let l:tagfile = <SID>FindTagFile('cscope.out')
+        let l:gtagfile = <SID>FindTagFile('GTAGS')
+        let l:tagpath = fnamemodify(l:tagfile, ':h')
+        let l:gtagpath = fnamemodify(l:gtagfile, ':h')
+        if filereadable(l:tagfile)
+            let g:cscope_database = l:tagfile
+            let g:cscope_relative_path = l:tagpath
+            " Set the cscope file relative to where it was found
+            execute 'cscope add ' . l:tagfile . ' ' . l:tagpath
+            set cscopetag
+        elseif filereadable(l:gtagfile)
+            set csprg=gtags-cscope
+            set cscopetag
+            execute 'cscope add ' . l:gtagfile . ' ' . l:gtagpath
+        endif
+    endfunction
+endif
+
+call LocateCscopeFile()
