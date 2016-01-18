@@ -125,3 +125,25 @@ if has("cscope")
 endif
 
 call LocateCscopeFile()
+
+
+" TOhtml super charge with clipboard support (inspired from https://github.com/google/vim-syncopate)
+function! CopyHtmlFun(a1, a2)
+  let l:old_html_use_css = g:html_use_css
+  let g:html_use_css = 0
+
+  if a:a1 == a:a2
+    execute '1,$ TOhtml'
+  else
+    execute a:a1 . ',' . a:a2 . 'TOhtml'
+  endif
+
+  let l:contents = join(getline(1, '$'), "\n")
+  call system('xclip -t text/html -selection clipboard', l:contents)
+  bwipeout!
+  let g:html_use_css= l:old_html_use_css
+
+  echo "Successfully copied html to clipboard"
+endfunction
+
+command! -range CopyHtml call CopyHtmlFun(<line1>, <line2>)
