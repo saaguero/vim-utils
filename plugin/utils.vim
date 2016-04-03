@@ -80,6 +80,9 @@ endfunction
 nnoremap <leader>! !!bash<cr>
 vnoremap <leader>! :<c-u>call RunCommand()<cr>
 
+" Search current word with Ag
+nnoremap <leader>m :Ag <C-r>=expand('<cword>')<cr><cr>
+
 " makes * and # work on visual mode. Taken from nelstrom/vim-visual-star-search
 function! s:VSetSearch(cmdtype)
   let temp = @s
@@ -91,7 +94,7 @@ endfunction
 xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
 xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 
-function <SID>FindTagFile(tag_file_name)
+function! FindTagFile(tag_file_name)
     " From our current directory, search up for tagfile
     let l:tag_file = findfile(a:tag_file_name, '.;/') " must be somewhere above us
     let l:tag_file = fnamemodify(l:tag_file, ':p')      " get the full path
@@ -105,9 +108,9 @@ endfunction
 " Automatically include cscope db if available. Taken from idbrii/daveconfig
 " Works either with cscope or gtags-cscope
 if has("cscope")
-    function LocateCscopeFile()
-        let l:tagfile = <SID>FindTagFile('cscope.out')
-        let l:gtagfile = <SID>FindTagFile('GTAGS')
+    function! LocateCscopeFile()
+        let l:tagfile = FindTagFile('cscope.out')
+        let l:gtagfile = FindTagFile('GTAGS')
         let l:tagpath = fnamemodify(l:tagfile, ':h')
         let l:gtagpath = fnamemodify(l:gtagfile, ':h')
         if filereadable(l:tagfile)
