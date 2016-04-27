@@ -30,7 +30,12 @@ nnoremap <silent> <leader>ss :call SourceVimscript("currentline")<CR>
 " split lines on whitespace
 " repeatable (requires vim-repeat)
 function! SplitOnSpace()
-  execute "normal f\<space>i\r\e"
+  let current_char = getline('.')[col('.') - 1]
+  if current_char == ' '
+    execute "normal i\r\e"
+  else
+    execute "normal f\<space>i\r\e"
+  endif
   silent! call repeat#set("\<Plug>CustomSplitOnSpace")
 endfunction
 
