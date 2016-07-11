@@ -54,6 +54,11 @@ endfunction
 nnoremap <space><space> :%s/\<<C-r>=expand('<cword>')<CR>\>/
 vnoremap <space><space> :<C-u>%s/<C-r>=GetVisualSelection()<CR>/
 
+" Easy change repeteable with dot (from romainl/dotvim)
+nnoremap <space>r *``cgn
+" The visual map depends on * in visual mode (look in this file)
+vmap <space>r *``cgn
+
 " Easy multiple cursors
 nnoremap <space>n :MultipleCursorsFind \<<C-r>=expand('<cword>')<CR>\><cr>
 vnoremap <space>n :<C-u>MultipleCursorsFind <C-r>=GetVisualSelection()<CR><cr>
@@ -155,3 +160,11 @@ function! CopyHtmlFun(a1, a2)
 endfunction
 
 command! -range CopyHtml call CopyHtmlFun(<line1>, <line2>)
+
+" help in a vertical panel
+function! VerticalHelp(topic)
+    execute "vertical botright help " . a:topic
+    execute "vertical resize 78"
+endfunction
+
+command! -complete=help -nargs=1 H call VerticalHelp(<f-args>)
