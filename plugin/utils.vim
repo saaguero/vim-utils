@@ -90,9 +90,6 @@ endfunction
 nnoremap <leader>! !!bash<cr>
 vnoremap <leader>! :<c-u>call RunCommand()<cr>
 
-" Search current word with Ag
-nnoremap <leader>m :Ag <C-r>=expand('<cword>')<cr><cr>
-
 " makes * and # work on visual mode. Taken from nelstrom/vim-visual-star-search
 function! s:VSetSearch(cmdtype)
   let temp = @s
@@ -135,9 +132,10 @@ if has("cscope")
             execute 'cscope add ' . l:gtagfile . ' ' . l:gtagpath
         endif
     endfunction
+
+    " call LocateCscopeFile()
 endif
 
-call LocateCscopeFile()
 
 
 " TOhtml super charge with clipboard support (inspired from https://github.com/google/vim-syncopate)
