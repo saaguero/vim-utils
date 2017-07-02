@@ -162,7 +162,11 @@ command! -range CopyHtml call CopyHtmlFun(<line1>, <line2>)
 " help in a vertical panel
 function! VerticalHelp(topic)
     execute "vertical botright help " . a:topic
-    execute "vertical resize 78"
+    execute "vertical resize 85"
 endfunction
 
 command! -complete=help -nargs=1 H call VerticalHelp(<f-args>)
+
+" convenient grep command with sane defaults
+command! -nargs=+ Grep execute 'grep -I --exclude-dir=.{git,svn.hg} --exclude=tags <args>'
+nnoremap <leader>u :Grep -r "" . <left><left><left><left>
